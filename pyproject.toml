@@ -34,28 +34,22 @@ classifiers = [
 ]
 
 [project.readme]
-file = "README.rst"
-content-type = "text/x-rst"
+file = "README.md"
+content-type = "text/markdown"
 
 [project.urls]
-Homepage = "https://github.com/abhisrkckl/Vela.jl"
-Documentation = "https://abhisrkckl.github.io/Vela.jl/"
+Homepage = "https://github.com/abhisrkckl/pint-gedm.jl"
 
 [project.scripts]
-pyvela = "pyvela.pyvela_script:main"
-pyvela-compare = "pyvela.pyvela_compare_script:main"
-pyvela-plot = "pyvela.pyvela_plot_script:main"
-pyvela-jlso = "pyvela.pyvela_jlso_script:main"
-pyvela-rethin = "pyvela.pyvela_rethin_script:main"
-pyvela-plotchains = "pyvela.pyvela_plotchains_script:main"
+pint-gedm = "pint_gedm:main"
 
 [tool.setuptools]
 zip-safe = false
-package-dir = {"" = "pyvela"}
+package-dir = {"" = "src"}
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["pyvela"]
+where = ["src"]
 namespaces = false
 
 [tool.setuptools.package-data]
