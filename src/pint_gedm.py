@@ -54,7 +54,7 @@ def main(argv=None):
         dist = (u.AU / px).to("pc", equivalencies=u.dimensionless_angles())
         dm = pygedm.dist_to_dm(gal_coords.l, gal_coords.b, dist, method=args.m)[0]
 
-        print("\nDistance to DM:")
+        print("\nParallax to DM:")
         print(f"\tParallax = {px}")
         print(f"\tDistance = {dist}")
         print(f"\tDM = {dm}")
