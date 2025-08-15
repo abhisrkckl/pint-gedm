@@ -40,21 +40,21 @@ def main(argv=None):
     print(f"Galactic coordinates (l, b): ({gal_coords.l}, {gal_coords.b})")
 
     if "DM" in m:
-        dm = m["DM"]
+        dm = m["DM"].quantity
         dist = pygedm.dm_to_dist(gal_coords.l, gal_coords.b, dm.value, method=args.m)[0]
         px = (u.AU / dist).to("mas", equivalencies=u.dimensionless_angles())
 
-        print("DM to Distance:")
+        print("\nDM to Distance:")
         print(f"\tDM = {dm}")
         print(f"\tDistance = {dist}")
         print(f"\tParallax = {px}")
 
     if "PX" in m:
-        px = m["PX"].value
+        px = m["PX"].quantity
         dist = (u.AU / px).to("pc", equivalencies=u.dimensionless_angles())
         dm = pygedm.dist_to_dm(gal_coords.l, gal_coords.b, dist, method=args.m)[0]
 
-        print("Distance to DM:")
-        print(f"\tParallax = {px} pc/cm^3")
-        print(f"\tDistance = {dist} pc")
-        print(f"\tDM = {dm.value} pc")
+        print("\nDistance to DM:")
+        print(f"\tParallax = {px}")
+        print(f"\tDistance = {dist}")
+        print(f"\tDM = {dm}")
