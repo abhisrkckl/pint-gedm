@@ -5,8 +5,9 @@
 
 
 Sample output:
-    $ pint-gedm J0030+0451.DMGP.par
     
+```$ pint-gedm J0030+0451.par -m ymw16```
+
     Pulsar: J0030+0451
     Galactic coordinates (l, b): (113.1411336945164 deg, -57.61133281656225 deg)
 
