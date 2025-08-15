@@ -1,7 +1,7 @@
 from typing import Union
 from pint.models import get_model, AstrometryEcliptic, AstrometryEquatorial
 import pygedm
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import astropy.units as u
 
 
@@ -9,6 +9,7 @@ def parse_args(argv):
     parser = ArgumentParser(
         prog="pint-gedm",
         description="Evaluate electron density computations on a par file.",
+        formatter_class=ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("parfile", help="Pulsar ephemeris file")
     parser.add_argument(
