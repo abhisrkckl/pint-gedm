@@ -1,9 +1,11 @@
 from typing import Union
 from pint.models import get_model, AstrometryEcliptic, AstrometryEquatorial
+from pint.logging import setup as setup_log
 import pygedm
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import astropy.units as u
 
+setup_log(level="ERROR")
 
 def parse_args(argv):
     parser = ArgumentParser(
@@ -25,7 +27,7 @@ def parse_args(argv):
 def main(argv=None):
     args = parse_args(argv)
 
-    m = get_model(args.parfile)
+    m = get_model(args.parfile, allow_T2=True, allow_tcb=True)
 
     astrometry: Union[AstrometryEcliptic, AstrometryEquatorial] = (
         m.components["AstrometryEcliptic"]
@@ -35,24 +37,24 @@ def main(argv=None):
     gal_coords = astrometry.coords_as_GAL()
 
     print(f"Pulsar: {m['PSR'].value}")
-    print(f"Galactic coordinates (l, b): ({gal_coords.l}, {gal_coords.b}) deg")
+    print(f"Galactic coordinates (l, b): ({gal_coords.l}, {gal_coords.b})")
 
     if "DM" in m:
-        dm = m["DM"].value
-        dist = pygedm.dm_to_dist(gal_coords.l, gal_coords.b, dm, method=args.m)[0]
+        dm = m["DM"]
+        dist = pygedm.dm_to_dist(gal_coords.l, gal_coords.b, dm.value, method=args.m)[0]
         px = (u.AU / dist).to("mas", equivalencies=u.dimensionless_angles())
 
-        print("DM to distance:")
-        print(f"\tDM = {dm} pc/cm^3")
-        print(f"\tDistance = {dist.value} pc")
-        print(f"\tParallax = {px.value} pc")
+        print("DM to Distance:")
+        print(f"\tDM = {dm}")
+        print(f"\tDistance = {dist}")
+        print(f"\tParallax = {px}")
 
     if "PX" in m:
         px = m["PX"].value
         dist = (u.AU / px).to("pc", equivalencies=u.dimensionless_angles())
         dm = pygedm.dist_to_dm(gal_coords.l, gal_coords.b, dist, method=args.m)[0]
 
-        print("DM to distance:")
+        print("Distance to DM:")
         print(f"\tParallax = {px} pc/cm^3")
         print(f"\tDistance = {dist} pc")
         print(f"\tDM = {dm.value} pc")
